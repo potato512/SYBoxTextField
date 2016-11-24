@@ -9,11 +9,11 @@
 #import "SYBoxTextField.h"
 
 static NSString *const markSecureText = @"●"; // ● *
+static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
 
 @interface SYBoxTextField () <UITextFieldDelegate>
 
-@property (nonatomic, assign) NSInteger maxCount;
-@property (nonatomic, assign) BOOL isSecureText;
+@property (nonatomic, assign) NSInteger textCount; // 最多输入位数
 @property (nonatomic, strong) NSMutableArray *labelArray;
 @property (nonatomic, strong) NSMutableArray *textArray;
 
@@ -34,7 +34,27 @@ static NSString *const markSecureText = @"●"; // ● *
     return self;
 }
 
-#pragma mark - 视力
+- (instancetype)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
+    if (self)
+    {
+        
+    }
+    return self;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self)
+    {
+        
+    }
+    return self;
+}
+
+#pragma mark - 视图
 
 /// 方块输入框（位数，明文或密文显示）
 - (void)boxInput:(NSInteger)count textEntry:(BOOL)isSecureText editDone:(void (^)(NSString *text))done
@@ -43,9 +63,9 @@ static NSString *const markSecureText = @"●"; // ● *
     {
         self.delegate = self;
 
-        self.maxCount = count;
-        self.isSecureText = isSecureText;
-        self.editFinish = done;
+        _textCount = count;
+        self.secureTextEntry = isSecureText;
+        self.editFinish = [done copy];
         
         self.tintColor = [UIColor clearColor];
         self.backgroundColor = [UIColor clearColor];
@@ -54,22 +74,69 @@ static NSString *const markSecureText = @"●"; // ● *
         self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         self.textAlignment = NSTextAlignmentCenter;
       
-        CGFloat heightSelf = CGRectGetHeight(self.bounds);
-        CGFloat widthSelf = ((heightSelf * self.maxCount < CGRectGetWidth(self.bounds)) ? CGRectGetWidth(self.bounds) : (heightSelf * self.maxCount));
+//        CGFloat heightSelf = CGRectGetHeight(self.bounds);
+//        CGFloat widthSelf = ((heightSelf * _textCount < CGRectGetWidth(self.bounds)) ? CGRectGetWidth(self.bounds) : (heightSelf * _textCount));
+//        
+//        CGFloat widthItem = heightSelf;
+//        CGFloat heightItem = heightSelf;
+//        CGFloat originX = ((widthSelf - widthItem * _textCount) / (_textCount - 1));
+//        CGFloat originY = 0.0;
+//        
+//        
+//        
+//        
+//        widthSelf = heightSelf * _textCount;
+//        if (widthSelf > CGRectGetWidth(self.bounds))
+//        {
+//            // 大于自身宽度时
+//            widthSelf = CGRectGetWidth(self.bounds);
+//            
+//            
+//        }
+//        else if (widthSelf == CGRectGetWidth(self.bounds))
+//        {
+//            // 等于自身宽度时
+//            widthItem = heightSelf;
+//            heightItem = heightSelf;
+//            originY = 3.0;
+//            originX = 0.0;
+//        }
+//        else
+//        {
+//            // 小于自身宽度时
+//            
+//        }
         
-        CGFloat widthItem = heightSelf;
-        CGFloat heightItem = heightSelf;
-        CGFloat originX = ((widthSelf - widthItem * self.maxCount) / (self.maxCount - 1));
-        CGFloat originY = 0.0;
         
-        self.labelArray = [[NSMutableArray alloc] initWithCapacity:self.maxCount];
-        for (int i = 0; i < self.maxCount; i++)
+        CGFloat heightSelft = CGRectGetHeight(self.bounds);
+        
+        CGFloat originXItem = originXY;
+        CGFloat originYItem = originXY;
+        CGFloat sizeItem = (heightSelft - originYItem * 2);
+      
+        CGFloat widthSelf = sizeItem * _textCount + originXItem * (_textCount + 1);
+        if (widthSelf > CGRectGetWidth(self.bounds))
         {
-            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((i * (widthItem + originX)), originY, widthItem, heightItem)];
+            // 大于自身宽度时
+            sizeItem = (CGRectGetWidth(self.bounds) - (_textCount * (originXItem + 1))) / _textCount;
+            originYItem = (heightSelft - sizeItem) / 2;
+        }
+        else if (widthSelf < CGRectGetWidth(self.bounds))
+        {
+            // 小于自身宽度时
+            originXItem = (CGRectGetWidth(self.bounds) - sizeItem * _textCount) / (_textCount + 1);
+        }
+        
+        
+        self.labelArray = [[NSMutableArray alloc] initWithCapacity:_textCount];
+        for (int i = 0; i < _textCount; i++)
+        {
+            UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake((i * (sizeItem + originXItem)), originYItem, sizeItem, sizeItem)];
             label.textAlignment = NSTextAlignmentCenter;
             label.textColor = [UIColor blackColor];
             label.layer.masksToBounds = YES;
             label.layer.borderWidth = 0.5;
+            label.font = [UIFont systemFontOfSize:(sizeItem * 0.8)];
             [self addSubview:label];
             
             [self.labelArray addObject:label];
@@ -80,13 +147,13 @@ static NSString *const markSecureText = @"●"; // ● *
         self.textBorderColor = [UIColor blackColor];
         
         self.limitStr = @"0123456789";
-        self.textArray = [[NSMutableArray alloc] initWithCapacity:self.maxCount];
+        self.textArray = [[NSMutableArray alloc] initWithCapacity:_textCount];
     }
 }
 
 - (void)resetLabelBackgroundColor
 {
-    for (NSInteger i = 0; i < self.maxCount; i++)
+    for (NSInteger i = 0; i < _textCount; i++)
     {
         UILabel *label = self.labelArray[i];
         label.backgroundColor = _textBackgroundColor;
@@ -95,7 +162,7 @@ static NSString *const markSecureText = @"●"; // ● *
 
 - (void)resetLabelCornerRadius
 {
-    for (NSInteger i = 0; i < self.maxCount; i++)
+    for (NSInteger i = 0; i < _textCount; i++)
     {
         UILabel *label = self.labelArray[i];
         label.layer.cornerRadius = _textCornerRadius;
@@ -104,10 +171,19 @@ static NSString *const markSecureText = @"●"; // ● *
 
 - (void)resetLabelBorderColor
 {
-    for (NSInteger i = 0; i < self.maxCount; i++)
+    for (NSInteger i = 0; i < _textCount; i++)
     {
         UILabel *label = self.labelArray[i];
         label.layer.borderColor = _textBorderColor.CGColor;
+    }
+}
+
+- (void)resetLabelTextColor
+{
+    for (NSInteger i = 0; i < _textCount; i++)
+    {
+        UILabel *label = self.labelArray[i];
+        label.textColor = _color;
     }
 }
 
@@ -153,16 +229,16 @@ static NSString *const markSecureText = @"●"; // ● *
 // 显示输入字符
 - (void)showLabelText
 {
-    for (NSInteger i = 0; i < self.maxCount; i++)
+    for (NSInteger i = 0; i < _textCount; i++)
     {
         UILabel *label = self.labelArray[i];
         NSString *text = (i < self.textArray.count ? self.textArray[i] : @"");
-        label.text = ((self.isSecureText && 0 != text.length) ? markSecureText : text);
+        label.text = ((self.secureTextEntry && 0 != text.length) ? markSecureText : text);
     }
     
-    if (self.editFinish && self.textArray.count == self.maxCount)
+    if (self.editFinish && self.textArray.count == _textCount)
     {
-        NSMutableString *textStr = [[NSMutableString alloc] initWithCapacity:self.maxCount];
+        NSMutableString *textStr = [[NSMutableString alloc] initWithCapacity:_textCount];
         for (NSString *string in self.textArray)
         {
             [textStr appendString:string];
@@ -185,7 +261,7 @@ static NSString *const markSecureText = @"●"; // ● *
 
     if ([textField isFirstResponder])
     {
-        BOOL isResult = [self limitTextCharacters:self.limitStr number:self.maxCount string:string];
+        BOOL isResult = [self limitTextCharacters:self.limitStr number:_textCount string:string];
 
         if ([string isEqualToString:@""])
         {
@@ -194,7 +270,7 @@ static NSString *const markSecureText = @"●"; // ● *
         }
         else
         {
-            if ((self.textArray.count < self.maxCount) && isResult)
+            if ((self.textArray.count < _textCount) && isResult)
             {
                 [self.textArray addObject:string];
             }
@@ -227,14 +303,11 @@ static NSString *const markSecureText = @"●"; // ● *
     [self resetLabelBorderColor];
 }
 
-- (void)setSecureTextEntry:(BOOL)secureTextEntry
+- (void)setColor:(UIColor *)color
 {
-    self.isSecureText = secureTextEntry;
-}
-
-- (void)setLimitStr:(NSString *)limitStr
-{
-    _limitStr = limitStr;
+    _color = color;
+    [self resetLabelTextColor];
+    
 }
 
 @end

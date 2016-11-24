@@ -16,6 +16,7 @@
 /// 方块输入框（位数，明文或密文显示）
 - (void)boxInput:(NSInteger)count textEntry:(BOOL)isSecureText editDone:(void (^)(NSString *text))done;
 
+
 /// 限制字符（默认只能输入数字）
 @property (nonatomic, strong) NSString *limitStr;
 
@@ -27,5 +28,8 @@
 
 /// 字符方框边框颜色（默认黑色）
 @property (nonatomic, strong) UIColor *textBorderColor;
+
+/// 字体颜色
+@property (nonatomic, strong) UIColor *color;
 
 @end
