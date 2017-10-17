@@ -1,10 +1,11 @@
-# BoxEntryTextField
+# SYBoxTextField
 小方块输入框（类似于微信支付密码的方块输入框）
 
-#效果图
+# 效果图
+
 ![boxTextfield.gif](./boxTextfield.gif)
 
-#使用方法介绍
+# 使用方法介绍
 
 ~~~ javascript
 
@@ -56,6 +57,14 @@ boxTextfield3.keyboardType = UIKeyboardTypeDefault;
 
 ~~~ 
 
+
+## 修改说明
+* 20171017
+  * 版本号：1.0.1
+  * 完善文档说明
+  * 源码与示例分离
+
+  
 
 
 

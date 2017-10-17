@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A7CABE591F95DF1300A68017 /* SYBoxTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A7CABE581F95DF1300A68017 /* SYBoxTextField.m */; };
 		A7F426101C094E0200846EC1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F4260F1C094E0200846EC1 /* main.m */; };
 		A7F426131C094E0200846EC1 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F426121C094E0200846EC1 /* AppDelegate.m */; };
 		A7F426161C094E0200846EC1 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F426151C094E0200846EC1 /* ViewController.m */; };
@@ -14,7 +15,6 @@
 		A7F4261B1C094E0300846EC1 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = A7F4261A1C094E0300846EC1 /* Images.xcassets */; };
 		A7F4261E1C094E0300846EC1 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = A7F4261C1C094E0300846EC1 /* LaunchScreen.xib */; };
 		A7F4262A1C094E0300846EC1 /* DemoTextfiledBoxTests.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F426291C094E0300846EC1 /* DemoTextfiledBoxTests.m */; };
-		A7F426381C09838E00846EC1 /* SYBoxTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = A7F426371C09838E00846EC1 /* SYBoxTextField.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -28,6 +28,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		A7CABE571F95DF1300A68017 /* SYBoxTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYBoxTextField.h; sourceTree = "<group>"; };
+		A7CABE581F95DF1300A68017 /* SYBoxTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYBoxTextField.m; sourceTree = "<group>"; };
 		A7F4260A1C094E0200846EC1 /* DemoTextfiledBox.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DemoTextfiledBox.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7F4260E1C094E0200846EC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7F4260F1C094E0200846EC1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -41,8 +43,6 @@
 		A7F426231C094E0300846EC1 /* DemoTextfiledBoxTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DemoTextfiledBoxTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		A7F426281C094E0300846EC1 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A7F426291C094E0300846EC1 /* DemoTextfiledBoxTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoTextfiledBoxTests.m; sourceTree = "<group>"; };
-		A7F426361C09838E00846EC1 /* SYBoxTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SYBoxTextField.h; sourceTree = "<group>"; };
-		A7F426371C09838E00846EC1 /* SYBoxTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SYBoxTextField.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +63,16 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A7CABE561F95DF1300A68017 /* SYBoxTextField */ = {
+			isa = PBXGroup;
+			children = (
+				A7CABE571F95DF1300A68017 /* SYBoxTextField.h */,
+				A7CABE581F95DF1300A68017 /* SYBoxTextField.m */,
+			);
+			name = SYBoxTextField;
+			path = ../../SYBoxTextField;
+			sourceTree = "<group>";
+		};
 		A7F426011C094E0200846EC1 = {
 			isa = PBXGroup;
 			children = (
@@ -88,11 +98,7 @@
 				A7F426121C094E0200846EC1 /* AppDelegate.m */,
 				A7F426141C094E0200846EC1 /* ViewController.h */,
 				A7F426151C094E0200846EC1 /* ViewController.m */,
-				A7F426361C09838E00846EC1 /* SYBoxTextField.h */,
-				A7F426371C09838E00846EC1 /* SYBoxTextField.m */,
-				A7F426171C094E0200846EC1 /* Main.storyboard */,
-				A7F4261A1C094E0300846EC1 /* Images.xcassets */,
-				A7F4261C1C094E0300846EC1 /* LaunchScreen.xib */,
+				A7CABE561F95DF1300A68017 /* SYBoxTextField */,
 				A7F4260D1C094E0200846EC1 /* Supporting Files */,
 			);
 			path = DemoTextfiledBox;
@@ -101,6 +107,9 @@
 		A7F4260D1C094E0200846EC1 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				A7F426171C094E0200846EC1 /* Main.storyboard */,
+				A7F4261A1C094E0300846EC1 /* Images.xcassets */,
+				A7F4261C1C094E0300846EC1 /* LaunchScreen.xib */,
 				A7F4260E1C094E0200846EC1 /* Info.plist */,
 				A7F4260F1C094E0200846EC1 /* main.m */,
 			);
@@ -225,9 +234,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				A7F426161C094E0200846EC1 /* ViewController.m in Sources */,
+				A7CABE591F95DF1300A68017 /* SYBoxTextField.m in Sources */,
 				A7F426131C094E0200846EC1 /* AppDelegate.m in Sources */,
 				A7F426101C094E0200846EC1 /* main.m in Sources */,
-				A7F426381C09838E00846EC1 /* SYBoxTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
