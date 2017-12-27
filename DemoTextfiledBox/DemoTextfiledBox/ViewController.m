@@ -51,6 +51,7 @@
     boxTextfield1.textCornerRadius = 5.0;
     boxTextfield1.textBorderColor = [UIColor blackColor];
     boxTextfield1.color = [UIColor redColor];
+    boxTextfield1.backgroundColor = [UIColor greenColor];
     
     // 2
     SYBoxTextField *boxTextfield2 = [[SYBoxTextField alloc] initWithFrame:CGRectMake(10.0, 60.0, 40.0 * 6 + 15.0 * 6, 40.0) count:6 textEntry:NO editDone:^(NSString *text) {
@@ -59,16 +60,17 @@
     [self.view addSubview:boxTextfield2];
     boxTextfield2.limitStr = @"0123456789";
     boxTextfield2.keyboardType = UIKeyboardTypeDefault;
+    boxTextfield2.backgroundColor = [UIColor orangeColor];
     
     // 3
     SYBoxTextField *boxTextfield3 = [[SYBoxTextField alloc] init];
-    boxTextfield3.frame = CGRectMake(10.0, 120.0, 100.0, 30.0);
+    boxTextfield3.frame = CGRectMake(10.0, 120.0, 250.0, 40.0);
     [boxTextfield3 boxInput:6 textEntry:NO editDone:^(NSString *text) {
         NSLog(@"text %@", text);
     }];
     [self.view addSubview:boxTextfield3];
     boxTextfield3.keyboardType = UIKeyboardTypeDefault;
-    
+    boxTextfield3.backgroundColor = [UIColor purpleColor];
 }
 
 - (void)CancelButtonClick

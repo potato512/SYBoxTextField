@@ -9,7 +9,7 @@
 #import "SYBoxTextField.h"
 
 static NSString *const markSecureText = @"●"; // ● *
-static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
+static CGFloat const originXY = 0.0; // 默认x，y坐标间距3.0
 
 @interface SYBoxTextField () <UITextFieldDelegate>
 
@@ -28,6 +28,7 @@ static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
     self = [super initWithFrame:frame];
     if (self)
     {
+        self.limitStr = @"0123456789";
         [self boxInput:count textEntry:isSecureText editDone:done];
     }
     
@@ -39,7 +40,7 @@ static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
     self = [super initWithFrame:frame];
     if (self)
     {
-        
+        self.limitStr = @"0123456789";
     }
     return self;
 }
@@ -49,7 +50,7 @@ static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
     self = [super init];
     if (self)
     {
-        
+        self.limitStr = @"0123456789";
     }
     return self;
 }
@@ -73,40 +74,6 @@ static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
         self.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
         self.contentVerticalAlignment = UIControlContentVerticalAlignmentCenter;
         self.textAlignment = NSTextAlignmentCenter;
-      
-//        CGFloat heightSelf = CGRectGetHeight(self.bounds);
-//        CGFloat widthSelf = ((heightSelf * _textCount < CGRectGetWidth(self.bounds)) ? CGRectGetWidth(self.bounds) : (heightSelf * _textCount));
-//        
-//        CGFloat widthItem = heightSelf;
-//        CGFloat heightItem = heightSelf;
-//        CGFloat originX = ((widthSelf - widthItem * _textCount) / (_textCount - 1));
-//        CGFloat originY = 0.0;
-//        
-//        
-//        
-//        
-//        widthSelf = heightSelf * _textCount;
-//        if (widthSelf > CGRectGetWidth(self.bounds))
-//        {
-//            // 大于自身宽度时
-//            widthSelf = CGRectGetWidth(self.bounds);
-//            
-//            
-//        }
-//        else if (widthSelf == CGRectGetWidth(self.bounds))
-//        {
-//            // 等于自身宽度时
-//            widthItem = heightSelf;
-//            heightItem = heightSelf;
-//            originY = 3.0;
-//            originX = 0.0;
-//        }
-//        else
-//        {
-//            // 小于自身宽度时
-//            
-//        }
-        
         
         CGFloat heightSelft = CGRectGetHeight(self.bounds);
         
@@ -114,17 +81,17 @@ static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
         CGFloat originYItem = originXY;
         CGFloat sizeItem = (heightSelft - originYItem * 2);
       
-        CGFloat widthSelf = sizeItem * _textCount + originXItem * (_textCount + 1);
-        if (widthSelf > CGRectGetWidth(self.bounds))
+        CGFloat widthTotal = sizeItem * _textCount + originXItem * (_textCount - 1);
+        if (widthTotal > CGRectGetWidth(self.bounds))
         {
             // 大于自身宽度时
             sizeItem = (CGRectGetWidth(self.bounds) - (_textCount * (originXItem + 1))) / _textCount;
             originYItem = (heightSelft - sizeItem) / 2;
         }
-        else if (widthSelf < CGRectGetWidth(self.bounds))
+        else if (widthTotal < CGRectGetWidth(self.bounds))
         {
             // 小于自身宽度时
-            originXItem = (CGRectGetWidth(self.bounds) - sizeItem * _textCount) / (_textCount + 1);
+            originXItem = (CGRectGetWidth(self.bounds) - sizeItem * _textCount) / (_textCount - 1);
         }
         
         
@@ -146,7 +113,6 @@ static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
         self.textCornerRadius = 3.0;
         self.textBorderColor = [UIColor blackColor];
         
-        self.limitStr = @"0123456789";
         self.textArray = [[NSMutableArray alloc] initWithCapacity:_textCount];
     }
 }
@@ -308,6 +274,16 @@ static CGFloat const originXY = 3.0; // 默认x，y坐标间距3.0
     _color = color;
     [self resetLabelTextColor];
     
+}
+
+/// 清空输入
+- (void)clearInput
+{
+    [self.labelArray enumerateObjectsUsingBlock:^(id  _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {
+        UILabel *label = (UILabel *)obj;
+        label.text = nil;
+    }];
+    [self.textArray removeAllObjects];
 }
 
 @end

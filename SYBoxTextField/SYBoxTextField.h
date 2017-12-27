@@ -32,4 +32,7 @@
 /// 字体颜色
 @property (nonatomic, strong) UIColor *color;
 
+/// 清空输入
+- (void)clearInput;
+
 @end
